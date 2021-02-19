@@ -1,3 +1,4 @@
+// artist mongoose model 
 const mongoconn = require('../helpers/mongoConn');
 
 const artistSchema = new mongoconn.Schema({
