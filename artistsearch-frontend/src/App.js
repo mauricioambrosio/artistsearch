@@ -3,10 +3,10 @@ import axios from 'axios';
 
 import './App.css';
 
-axios.defaults.baseURL = 'http://localhost:3000/api';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 class App extends Component {
-state = { artists:[], query:"", loading:false };
+state = { artists:[], query:"", message:"" };
 
 // input handle
 handleChange=({currentTarget: input}) => {
@@ -19,22 +19,21 @@ handleSubmit = async (e) => {
 
   try{
     // show loading message
-    this.setState({loading:true});
+    this.setState({message:"Loading..."});
     const response = await axios.post(`/query/${this.state.query}`);
     
     // update artists array with data and hide loading message
     this.artistsReceived(response.data);
-  
   } 
   catch(err){
     console.log(err.message);
-    this.setState({loading: false});
+    this.setState({message: "Server error: " + err.message});
   }
 }
 
 
 artistsReceived(data) {
-  this.setState({artists: data, loading:false});
+  this.setState({artists: data, message:""});
 }
 
   
@@ -62,7 +61,10 @@ render() {
       <br />
       
       {/* if loading is true, show loading message */}
-      {this.state.loading? <h5 className="text-secondary">Loading...</h5>: null}
+      {/* {this.state.loading? <h5 className="text-secondary">Loading...</h5>: null} */}
+
+      {/* show message: can be loading or error*/}
+      {this.state.message? <h5 className="text-secondary">{this.state.message}</h5>: null}
 
       {/* show list of artists */}
       {this.state.artists.map(artist => <h6 key={artist._id}>{artist.rank + ". " + artist.name}</h6>)}
