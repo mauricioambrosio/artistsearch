@@ -1,3 +1,5 @@
+RUN THE PROJECT IN YOUR LOCAL MACHINE
+
 The steps below must be completed using the windows command line interface
 
 To run this software on your local machine do the following:
