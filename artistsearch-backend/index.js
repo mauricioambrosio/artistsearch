@@ -19,11 +19,19 @@ router.post('/:artist_name', async (req, res) => {
     // get artist name from request
     const query = req.params.artist_name;
 
+    // *** retrieving all data works fine for the current data. However for a much larger data 
+    // it would not be efficient as keeping the entire data at once would consume too much memory. 
+    // For larger data a good solution would be to retrieve the data in chunks, calculate the scores,
+    // and keep the highest scoring artist of each chunk ***
+    
     // get artists from remote mongodb 
     const artists = await Artist.find();
     
-    // calculate artist bleu scores based on query and artist names, sort based on scores and rank artists
+    // calculate artist bleu scores based on query and artist names.
     const scoredArtists = bleuScores(artists, query);
+
+    // sort based on scores and rank artists
+    // O ( N*log(N) )
     const sortedScoredArtists = sortList(scoredArtists, true, "score");
     const rankedArtists = sortedScoredArtists.map((artist, index) => ({...artist, rank:index+1}));
     

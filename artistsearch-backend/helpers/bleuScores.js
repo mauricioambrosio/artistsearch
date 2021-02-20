@@ -1,22 +1,32 @@
+// bleu score algorithm is used in machine translation to evaluate model performance
+// by checking how similar was the machine translation to a reference human generated translation.
+// Similarity is measured based on how many word based unigrams, bigrams, treegram, ..., ngrams, the
+// two sentenses have in common, with a score ranging from 0 to 1.
+// This version of the algorithm uses character ngrams instead of words, and compares the query to the 
+// artist names. 
+
 const _ = require('underscore');
 
 // ignore fields except for _id and name
+// O ( N ), where N is the number of artists
 const parseArtist = (artist) => _.pick(artist, ["_id", "name"]);
 
 // calculate bleu scores for all artists
+// O ( N * ( n * (Q + A) ) )
 function bleuScores(artists, query){
     console.log("bleu scores");    
     return artists.map(artist => bleuScore(parseArtist(artist), query));
 }
 
 // calculate blue score for query and artist name
+// O ( n * (Q + A) ) where n is the max N-gram size, Q is the query length, and A is the artist name length  
 function bleuScore(artist, query){
 
     // convert artist name and query to lower case and trim white spaces
     const artistName = artist.name.toLowerCase().trim();
     query = query.toLowerCase().trim();
 
-    // N-gram value 
+    // max N-gram size  
     N = 2;
     
     nGrams = {};

@@ -40,6 +40,7 @@ artistsReceived(data) {
 render() { 
   return ( 
 
+  // Using bootstrap to speed up frontend development
   <form>
     <div className="text-center" style={{marginTop: 150}}> 
 
