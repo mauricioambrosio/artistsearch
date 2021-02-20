@@ -17,6 +17,10 @@ To run this software on your local machine do the following:
    b.i. setx ARTIST_SEARCH_DB "mongodb+srv://artistsearch-user:VQXPNr8HRbzZwQjf@cluster0.wiqkg.mongodb.net/artistsearch?retryWrites=true&w=majority";
    b.ii. restart terminal.
 
+   NOTE:
+   Normally I would not share this mongodb connection string on github because it contains database secrets. I am only doing so to allow anyone to reproduce the
+   system just from reading the README file. Nevertheless, the user in this connection string only has read permissions on the database.
+
 4. Start the backend server:
    a. Open the directory artistsearch-backend.
 
